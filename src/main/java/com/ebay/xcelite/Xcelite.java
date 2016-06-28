@@ -16,6 +16,7 @@
 package com.ebay.xcelite;
 
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -41,6 +42,7 @@ public class Xcelite {
 
   private final Workbook workbook;
   private File file;
+  private InputStream is;
 
   public Xcelite() {
     workbook = new XSSFWorkbook();
@@ -56,6 +58,16 @@ public class Xcelite {
       throw new RuntimeException(e);
     }
   }
+
+  public Xcelite(InputStream is) {
+    try {
+      this.is = is;
+      workbook = new XSSFWorkbook(is);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
 
   /**
    * Creates new sheet.
