@@ -50,10 +50,14 @@ public class SimpleSheetReader extends SheetReaderAbs<Collection<Object>> {
         continue;
       }
       List<Object> row = Lists.newArrayList();
+      short cellsNum = excelRow.getLastCellNum();
+
       Iterator<Cell> cellIterator = excelRow.cellIterator();
       boolean blankRow = true;
-      while (cellIterator.hasNext()) {
-        Object value = readValueFromCell(cellIterator.next());
+      for(int i=0; i<cellsNum; i++) {
+        Object value = readValueFromCell(excelRow.getCell(i, 
+            Row.MissingCellPolicy.RETURN_NULL_AND_BLANK));
+
         if (blankRow && value != null && !String.valueOf(value).isEmpty()) {
           blankRow = false;
         }
