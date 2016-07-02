@@ -43,16 +43,17 @@ public class SimpleSheetReader extends SheetReaderAbs<Collection<Object>> {
     List<Collection<Object>> rows = Lists.newArrayList();
     Iterator<Row> rowIterator = sheet.getNativeSheet().iterator();
     boolean firstRow = true;
+    short cellsNum = -1;
     while (rowIterator.hasNext()) {      
       Row excelRow = rowIterator.next();
-      if (firstRow && skipHeader) {
+      if(firstRow){
+        cellsNum = excelRow.getLastCellNum();
         firstRow = false;
-        continue;
+        if(skipHeader)
+            continue;
       }
       List<Object> row = Lists.newArrayList();
-      short cellsNum = excelRow.getLastCellNum();
 
-      Iterator<Cell> cellIterator = excelRow.cellIterator();
       boolean blankRow = true;
       for(int i=0; i<cellsNum; i++) {
         Object value = readValueFromCell(excelRow.getCell(i, 
