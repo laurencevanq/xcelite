@@ -39,22 +39,27 @@ public abstract class SheetWriterAbs<T> implements SheetWriter<T> {
   }
   
   protected void writeToCell(Cell cell, Object fieldValueObj, Class<?> dataType) {
-    Class<?> type = fieldValueObj.getClass();
-    if (dataType != null) {
-      type = dataType;
-    }
-    if (type == Date.class) {
-      cell.setCellValue((Date) fieldValueObj);
-    } else if (type == Boolean.class) {
-      cell.setCellValue((Boolean) fieldValueObj);
-    } else if (type == Double.class || type == double.class || type == Integer.class || type == int.class
-        || type == Long.class || type == long.class || type == Float.class || type == float.class
-        || type == Short.class || type == short.class) {
-      cell.setCellType(Cell.CELL_TYPE_NUMERIC);
-      cell.setCellValue(Double.valueOf(fieldValueObj.toString()));
+    if(fieldValueObj==null){
+      cell.setCellType(Cell.CELL_TYPE_BLANK);
+      cell.setCellValue("");
     } else {
-      cell.setCellType(Cell.CELL_TYPE_STRING);
-      cell.setCellValue(fieldValueObj.toString());
+        Class<?> type = fieldValueObj.getClass();
+        if (dataType != null) {
+          type = dataType;
+        }
+        if (type == Date.class) {
+          cell.setCellValue((Date) fieldValueObj);
+        } else if (type == Boolean.class) {
+          cell.setCellValue((Boolean) fieldValueObj);
+        } else if (type == Double.class || type == double.class || type == Integer.class || type == int.class
+            || type == Long.class || type == long.class || type == Float.class || type == float.class
+            || type == Short.class || type == short.class) {
+          cell.setCellType(Cell.CELL_TYPE_NUMERIC);
+          cell.setCellValue(Double.valueOf(fieldValueObj.toString()));
+        } else {
+          cell.setCellType(Cell.CELL_TYPE_STRING);
+          cell.setCellValue(fieldValueObj.toString());
+        }
     }
   }
   
