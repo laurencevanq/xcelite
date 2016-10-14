@@ -19,6 +19,7 @@ import java.util.Collection;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.CellType;
 
 import com.ebay.xcelite.sheet.XceliteSheet;
 import com.ebay.xcelite.styles.CellStylesBank;
@@ -43,7 +44,7 @@ public class SimpleSheetWriter extends SheetWriterAbs<Collection<Object>> {
       Row excelRow = sheet.getNativeSheet().createRow(i);
       int j = 0;
       for (Object column : row) {
-        Cell cell = excelRow.createCell(j);
+        Cell cell = excelRow.createCell(j, CellType.STRING);
         if (writeHeader && i == 0) {
           cell.setCellStyle(CellStylesBank.get(sheet.getNativeSheet().getWorkbook()).getBoldStyle());
         }
